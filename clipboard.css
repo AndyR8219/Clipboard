@@ -1,0 +1,122 @@
+/*SCSS*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ceeef8;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+.body__body {
+  display: inline-flex;
+}
+
+.tabs {
+  /*width: 600px;*/
+  /*height: 350px;*/
+  /*background: grey;*/
+  margin: 50px 20px;
+  /* font-family: sans-serif; */
+}
+
+.tab-h {
+  display: inline-block;
+  padding: 5px 10px;
+  line-height: 30px;
+  border: 1px solid black;
+  text-align: center;
+  background: #eaeaea;
+}
+
+/*тело вкладок*/
+.tab-b {
+  width: 500px;
+  background: #fad6d6;
+  display: none;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.tabs-body {
+  /*width: 500px;*/
+  position: relative;
+  top: -1px;
+  /*z-index: 1;*/
+}
+
+.tabs-header {
+  position: relative;
+  width: 100%;
+  /*z-index: 2;*/
+}
+
+.active {
+  background: gray;
+  font-weight: 700;
+}
+
+textarea {
+  width: 400px;
+  margin: 5px;
+  background: #f5f5f5;
+}
+
+.textarea {
+  display: flex;
+}
+
+button {
+  margin: 5px;
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+button:hover {
+  background: #878787;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.body-list {
+  margin-top: 91px;
+  height: 716px;
+  width: 300px;
+  background: #d9f5c3;
+  border: 1px solid black;
+}
+
+#list,
+#list2 {
+  list-style: none;
+  margin: 15px;
+}
+
+.link {
+  margin: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: blue;
+}
+
+img {
+  margin-right: 10px;
+}
+
+.links {
+  margin-left: 20px;
+  margin-top: 91px;
+  height: 716px;
+  width: 300px;
+  background: #f0f8c2;
+  border: 1px solid black;
+}

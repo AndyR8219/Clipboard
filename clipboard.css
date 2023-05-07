@@ -6,20 +6,15 @@
 }
 
 body {
-  background-color: #ceeef8;
+  background-color: #e9e9e9;
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 .body__body {
-  display: inline-flex;
-}
-
-.tabs {
-  /*width: 600px;*/
-  /*height: 350px;*/
-  /*background: grey;*/
-  margin: 50px 20px;
-  /* font-family: sans-serif; */
+  margin: 15px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .tab-h {
@@ -29,15 +24,21 @@ body {
   border: 1px solid black;
   text-align: center;
   background: #eaeaea;
+  border-radius: 15px 15px 0 0;
+}
+
+.tab-h:first-child {
+  margin-left: 25px;
 }
 
 /*тело вкладок*/
 .tab-b {
   width: 500px;
-  background: #fad6d6;
+  background: #d7eff5;
   display: none;
   padding: 20px;
   border: 1px solid black;
+  border-radius: 15px;
 }
 
 .tabs-body {
@@ -83,11 +84,12 @@ button:hover {
 }
 
 .body-list {
-  margin-top: 91px;
-  height: 716px;
-  width: 300px;
+  /* margin-top: 91px;
+  height: auto; */
+  /* width: 300px; */
   background: #d9f5c3;
   border: 1px solid black;
+  border-radius: 15px;
 }
 
 #list,
@@ -113,10 +115,11 @@ img {
 }
 
 .links {
-  margin-left: 20px;
+  /* margin-left: 20px;
   margin-top: 91px;
-  height: 716px;
-  width: 300px;
+  height: auto; */
+  /* width: 300px; */
   background: #f0f8c2;
   border: 1px solid black;
+  border-radius: 15px;
 }

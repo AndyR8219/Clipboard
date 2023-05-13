@@ -1,3 +1,6 @@
+const countHeaders = 3
+const countTextarea = 5
+
 // список шаблонов в полях textarea
 const tab1 = [
   { value: `Text1` },
@@ -31,23 +34,44 @@ const list2 = [
   { link: 'https://yandex.ru/', name: 'Yandex' },
   { link: 'https://translate.google.com/?hl=ru', name: 'fdasdadasd' },
 ]
-// список программ
-const listApp = [
-  { app: 'Выбери название программы' },
-  { app: 'Adobe Reader 11' },
-  { app: 'КСУОП' },
-  { app: 'Java' },
-  { app: 'Program' },
-  { app: 'Программа для записи' },
-]
+
+const conteiner = document.querySelector('.body__body')
+const tabsHeader = document.createElement('div')
+tabsHeader.className = 'tabs-header'
+conteiner.prepend(tabsHeader)
+
+const nameHeaders = ['Шаблон', 'Вставка', 'Прочее']
+
+function createHeader(num) {
+  for (let i = 0; i < num; i++) {
+    const header = document.createElement('div')
+    header.className = 'tab-h'
+    header.innerHTML = nameHeaders.find((e, index) => index === i)
+    header.setAttribute('data-tab1', i)
+    tabsHeader.appendChild(header)
+  }
+}
+createHeader(countHeaders)
+
+const tabsBody = document.createElement('div')
+tabsBody.className = 'tabs-body'
+tabsHeader.appendChild(tabsBody)
+
+for (let j = 0; j < countHeaders; j++) {
+  const tabBlock = document.createElement('div')
+  tabBlock.className = 'tab-b'
+  tabBlock.setAttribute('data-tab1', j)
+  tabsBody.appendChild(tabBlock)
+}
 
 const tabHeaders = document.querySelectorAll('.tab-h')
 const tabBlocks = document.querySelectorAll('.tab-b')
+tabHeaders[0].classList.add('active')
+tabBlocks[0].style.display = 'block'
 
 for (const header of tabHeaders) {
   header.addEventListener('click', (event) => {
-    clearStyleBlock()
-    clearActiveClasses()
+    clearStyleAndClasses()
     header.classList.add('active')
     for (const block of tabBlocks) {
       if (
@@ -60,49 +84,33 @@ for (const header of tabHeaders) {
   })
 }
 
-function clearStyleBlock() {
+function clearStyleAndClasses() {
   tabBlocks.forEach((block) => {
     block.style.display = 'none'
   })
-}
-
-function clearActiveClasses() {
   tabHeaders.forEach((header) => {
     header.classList.remove('active')
   })
 }
 
-document.querySelector('.tabs-body').addEventListener('click', fBtn)
-
-// функция перебора кнопок копирования
-function fBtn(event) {
-  if (event.target.className === 'copy') {
-    // dataTab1 - номер кнопки, которую нажали
-    let dataTab1 = event.target.getAttribute('data-tab')
-    // все textarea с содержимым
-    let tabBody1 = document.getElementsByClassName('out')
-    for (let i = 0; i < tabBody1.length; i++) {
-      if (dataTab1 == i) {
-        tabBody1[i].focus()
-        tabBody1[i].select()
-        clipboard()
-      }
-    }
-  }
-}
+// function clearActiveClasses() {
+//   tabHeaders.forEach((header) => {
+//     header.classList.remove('active')
+//   })
+// }
 
 // функция копирования в буфер обмена
 function clipboard() {
   document.execCommand('copy')
 }
 
-// перебор массива с шаблонами для копирования.
-const textarea = document.getElementsByClassName('out')
-tab1.forEach(function (text, index) {
-  let value = text.value,
-    number = index
-  textarea[number].textContent = `${value}`
-})
+// // перебор массива с шаблонами для копирования.
+// const textarea = document.getElementsByClassName('out')
+// tab1.forEach(function (text, index) {
+//   let value = text.value,
+//     number = index
+//   textarea[number].textContent = `${value}`
+// })
 
 // перебор массива с ссылками и создание их в отдельном поле.
 const ul = document.getElementById('list')
@@ -111,42 +119,19 @@ createList(list, ul)
 const ul2 = document.getElementById('list2')
 createList(list2, ul2)
 
-function createList(arg, lisssst) {
-  arg.forEach(function (links) {
-    let linkName = links.name,
-      link = links.link
-    createLi(linkName, link, lisssst)
+function createList(list, ul) {
+  list.forEach((elem) => {
+    const { name, link } = elem
+    createLi(name, link, ul)
   })
 }
 
-function createLi(linkName, link, spisok) {
-  let li = document.createElement('Li')
-  let a = document.createElement('a')
-  spisok.appendChild(li).appendChild(a)
+function createLi(linkName, link, list) {
+  const li = document.createElement('Li')
+  const a = document.createElement('a')
+  list.appendChild(li).appendChild(a)
   li.setAttribute('class', 'link')
   a.textContent = linkName
   a.setAttribute('href', `${link}`)
   a.setAttribute('target', '_blank')
-}
-
-// перебор массива с названием программ и создине шаблона
-listApp.forEach(function (program) {
-  let prog = program.app
-  createOption(prog)
-})
-
-function createOption(el) {
-  let option = document.createElement('option')
-  document.getElementById('listapp').appendChild(option)
-  option.setAttribute('value', `${el}`)
-  option.textContent = `${el}`
-}
-
-//функция подстановки шаблона при выборе элемента из списка
-document.getElementById('listapp').onchange = function () {
-  let sel = document.getElementById('listapp').selectedIndex
-  let options = document.getElementById('listapp').options
-  let text = options[sel].text
-  tab1[0].value = `Для установки выберите пакет ${text} и дождитесь выполнения!`
-  document.getElementById('first').value = tab1[0].value
 }

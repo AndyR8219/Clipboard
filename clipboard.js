@@ -1,25 +1,9 @@
 const countHeaders = 3
 const countTextarea = 5
 
+const nameHeaders = ['Шаблон', 'Вставка', 'Прочее']
 // список шаблонов в полях textarea
-const tab1 = [
-  { value: `Text1` },
-  { value: 'Text2' },
-  { value: 'Text3' },
-  { value: 'Text4' },
-  { value: 'Text5' },
-  { value: 'Text6' },
-  { value: 'Text7' },
-  { value: 'Text8' },
-  { value: 'Text9' },
-  { value: 'Text10' },
-  { value: 'Text11' },
-  { value: 'Text12' },
-  { value: 'Text13' },
-  { value: 'Text14' },
-  { value: 'Text15' },
-  { value: 'Text16' },
-]
+const valueTextarea = ['Text1', 'Text2', 'Text3', 'Text4', 'Text5', 'Text6']
 // список ссылок в отдельном поле
 const list = [
   { link: 'https://www.youtube.com/?gl=RU&hl=ru', name: 'YouTub' },
@@ -40,35 +24,37 @@ const tabsHeader = document.createElement('div')
 tabsHeader.className = 'tabs-header'
 conteiner.prepend(tabsHeader)
 
-const nameHeaders = ['Шаблон', 'Вставка', 'Прочее']
-
-function createHeader(num) {
+//Создание вкладок
+function createHeader(num, elem) {
   for (let i = 0; i < num; i++) {
-    const header = document.createElement('div')
-    header.className = 'tab-h'
-    header.innerHTML = nameHeaders.find((e, index) => index === i)
-    header.setAttribute('data-tab1', i)
-    tabsHeader.appendChild(header)
+    const div = document.createElement('div')
+    div.setAttribute('data-tab1', i)
+    if (elem === 'tab-h') {
+      div.className = 'tab-h'
+      div.innerHTML =
+        nameHeaders.find((e, index) => index === i) || `Прочее-${i}`
+      tabsHeader.appendChild(div)
+    } else if (elem === 'tab-b') {
+      div.className = 'tab-b'
+      tabsBody.appendChild(div)
+      createTextBlockAndBtn(countTextarea, div)
+    }
   }
 }
-createHeader(countHeaders)
+createHeader(countHeaders, 'tab-h')
 
 const tabsBody = document.createElement('div')
 tabsBody.className = 'tabs-body'
 tabsHeader.appendChild(tabsBody)
 
-for (let j = 0; j < countHeaders; j++) {
-  const tabBlock = document.createElement('div')
-  tabBlock.className = 'tab-b'
-  tabBlock.setAttribute('data-tab1', j)
-  tabsBody.appendChild(tabBlock)
-}
+createHeader(countHeaders, 'tab-b')
 
 const tabHeaders = document.querySelectorAll('.tab-h')
 const tabBlocks = document.querySelectorAll('.tab-b')
 tabHeaders[0].classList.add('active')
 tabBlocks[0].style.display = 'block'
 
+//Перебок вкладок, ставиться слушатель на какую нажали
 for (const header of tabHeaders) {
   header.addEventListener('click', (event) => {
     clearStyleAndClasses()
@@ -84,6 +70,7 @@ for (const header of tabHeaders) {
   })
 }
 
+//Очистка стилей и отображение блоков
 function clearStyleAndClasses() {
   tabBlocks.forEach((block) => {
     block.style.display = 'none'
@@ -93,24 +80,43 @@ function clearStyleAndClasses() {
   })
 }
 
-// function clearActiveClasses() {
-//   tabHeaders.forEach((header) => {
-//     header.classList.remove('active')
-//   })
-// }
+//Создание блока textarea с полем информации и кнопки копирования в буфер
+function createTextBlockAndBtn(countBlocks, tab_block) {
+  for (let i = 0; i < countBlocks; i++) {
+    const div = document.createElement('div')
+    div.className = 'textarea'
+    const textarea = document.createElement('textarea')
+    textarea.className = 'out'
+    textarea.setAttribute('cols', '60')
+    textarea.setAttribute('rows', '6')
+    const btn = document.createElement('button')
+    btn.className = 'copy'
+    btn.innerText = 'Копировать'
+    div.append(textarea, btn)
+    tab_block.appendChild(div)
+  }
+}
+
+//Добавление текста из массива в блок textarea
+const valueText = document.querySelectorAll('.out')
+valueText.forEach((item, index) => {
+  item.textContent = valueTextarea.filter((el, ind) => ind === index)
+})
+
+//Копирование текста из блока textarea в буфер
+const btnTextarea = document.querySelectorAll('.copy')
+for (const btn of btnTextarea) {
+  btn.addEventListener('click', (elem) => {
+    elem.target.previousSibling.focus()
+    elem.target.previousSibling.select()
+    clipboard()
+  })
+}
 
 // функция копирования в буфер обмена
 function clipboard() {
   document.execCommand('copy')
 }
-
-// // перебор массива с шаблонами для копирования.
-// const textarea = document.getElementsByClassName('out')
-// tab1.forEach(function (text, index) {
-//   let value = text.value,
-//     number = index
-//   textarea[number].textContent = `${value}`
-// })
 
 // перебор массива с ссылками и создание их в отдельном поле.
 const ul = document.getElementById('list')

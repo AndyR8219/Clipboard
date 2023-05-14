@@ -66,8 +66,8 @@ textarea {
   display: flex;
 }
 
-button {
-  margin: 5px;
+.copy {
+  margin: 30px 5px 5px 5px;
   width: 80px;
   height: 30px;
   border-radius: 10px;
